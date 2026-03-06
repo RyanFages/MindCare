@@ -1,4 +1,5 @@
 import { BookOpen, HeartHandshake, Volume2, Calendar, PlayCircle, Clock, BookText } from 'lucide-react';
+import { useLanguage } from '@/lib/LanguageContext';
 import { cn } from '@/lib/utils';
 import Screen from '@/components/mindcare/Screen';
 import BottomBar from '@/components/mindcare/BottomBar';
@@ -12,6 +13,7 @@ interface HomeScreenProps {
 }
 
 const HomeScreen = ({ onNavigate }: HomeScreenProps) => {
+  const { t } = useLanguage();
   const quickActions = [
     { label: 'Comprendre', icon: BookOpen, color: 'bg-mc-blue-light', target: 'learn' },
     { label: 'Parler', icon: HeartHandshake, color: 'bg-mc-purple', target: 'help' },
@@ -23,7 +25,7 @@ const HomeScreen = ({ onNavigate }: HomeScreenProps) => {
       {/* Immersive Header */}
       <div className="pt-8 pb-6 px-4 flex flex-col items-center text-center bg-gradient-to-b from-background via-card to-background">
         <BrandLogo size="small" className="mb-6 w-8 h-8" />
-        <H1 className="mb-2 text-[32px]">Bonjour, Sarah</H1>
+        <H1 className="mb-2 text-[32px]">{t("home.welcome")}, Sarah</H1>
         <TextBody className="text-muted-foreground text-[16px]">Comment te sens-tu aujourd'hui ?</TextBody>
       </div>
 
