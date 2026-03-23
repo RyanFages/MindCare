@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 import { translations, type TranslationKey } from "./translations";
 
-export type Language = "fr" | "en" | "es";
+export type Language = "fr" | "en" | "es" | "de" | "it" | "pt" | "ja" | "zh";
 
 interface LanguageContextType {
     language: Language;
@@ -26,6 +26,11 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
         const browserLang = navigator.language.split("-")[0];
         if (browserLang === "en") return "en";
         if (browserLang === "es") return "es";
+        if (browserLang === "de") return "de";
+        if (browserLang === "it") return "it";
+        if (browserLang === "pt") return "pt";
+        if (browserLang === "ja") return "ja";
+        if (browserLang === "zh") return "zh";
         return "fr"; // Default
     });
 

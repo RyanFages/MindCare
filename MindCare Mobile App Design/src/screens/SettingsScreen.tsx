@@ -66,12 +66,18 @@ const SettingsScreen = ({ onNavigate }: SettingsScreenProps) => {
               ? t("appearance.theme.system")
               : t("appearance.theme.light");
 
-    const languageLabel =
-        language === "fr"
-            ? "Français"
-            : language === "es"
-              ? "Español"
-              : "English";
+    const languageLabelMap: Record<string, string> = {
+        fr: t("language.french"),
+        en: t("language.english"),
+        es: t("language.spanish"),
+        de: t("language.german"),
+        it: t("language.italian"),
+        pt: t("language.portuguese"),
+        ja: t("language.japanese"),
+        zh: t("language.chinese"),
+    };
+
+    const languageLabel = languageLabelMap[language] || t("language.english");
 
     const handleLogout = () => {
         logout();

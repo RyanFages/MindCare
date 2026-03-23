@@ -65,6 +65,11 @@ export const en = {
     "language.french": "Français",
     "language.english": "English",
     "language.spanish": "Español",
+    "language.german": "Deutsch",
+    "language.italian": "Italiano",
+    "language.portuguese": "Português",
+    "language.japanese": "日本語",
+    "language.chinese": "中文",
 
     // Common
     "button.back": "Back",

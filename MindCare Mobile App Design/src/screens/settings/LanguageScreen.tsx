@@ -56,6 +56,31 @@ const LanguageScreen = ({ onBack }: { onBack: () => void }) => {
                         label={t("language.spanish")}
                         flag="🇪🇸"
                     />
+                    <RadioOption
+                        id="de"
+                        label={t("language.german")}
+                        flag="🇩🇪"
+                    />
+                    <RadioOption
+                        id="it"
+                        label={t("language.italian")}
+                        flag="🇮🇹"
+                    />
+                    <RadioOption
+                        id="pt"
+                        label={t("language.portuguese")}
+                        flag="🇵🇹"
+                    />
+                    <RadioOption
+                        id="ja"
+                        label={t("language.japanese")}
+                        flag="🇯🇵"
+                    />
+                    <RadioOption
+                        id="zh"
+                        label={t("language.chinese")}
+                        flag="🇨🇳"
+                    />
                 </div>
                 <p className="text-center text-[13px] text-mc-text-muted mt-4">
                     {t("language.subtitle")}
