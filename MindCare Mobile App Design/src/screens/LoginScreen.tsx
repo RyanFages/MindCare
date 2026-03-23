@@ -6,6 +6,7 @@ import Screen from "@/components/mindcare/Screen";
 import BrandLogo from "@/components/mindcare/BrandLogo";
 import McButton from "@/components/mindcare/McButton";
 import { H1, TextBody } from "@/components/mindcare/Typography";
+import { useLanguage } from "@/lib/LanguageContext";
 
 interface LoginScreenProps {
     onLoginSuccess: () => void;
@@ -20,6 +21,7 @@ const LoginScreen = ({ onLoginSuccess }: LoginScreenProps) => {
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const { t } = useLanguage();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -39,12 +41,12 @@ const LoginScreen = ({ onLoginSuccess }: LoginScreenProps) => {
             } else {
                 setError(
                     isSignup
-                        ? "Une erreur est survenue lors de l'inscription"
-                        : "Email ou mot de passe incorrect. Essayez admin@gmail.com / ADMIN",
+                        ? t("signup.error")
+                        : t("login.error"),
                 );
             }
         } catch (err) {
-            setError("Une erreur est survenue");
+            setError(t("error.occurred"));
         } finally {
             setLoading(false);
         }
@@ -69,10 +71,10 @@ const LoginScreen = ({ onLoginSuccess }: LoginScreenProps) => {
                     className="w-full text-center mb-8"
                 >
                     <H1 className="mb-2 text-[24px]">
-                        {isSignup ? "Créer un compte" : "Connexion"}
+                        {isSignup ?  t('login.subscribe') : t('login.connect')}
                     </H1>
                     <TextBody className="text-muted-foreground">
-                        {isSignup ? "Rejoins MindCare" : "Accède à ton espace"}
+                        {isSignup ? t('login.subscribe.subtitle') : t('login.connect.subtitle')}
                     </TextBody>
                 </motion.div>
 
@@ -87,13 +89,13 @@ const LoginScreen = ({ onLoginSuccess }: LoginScreenProps) => {
                     {isSignup && (
                         <div>
                             <label className="text-sm font-medium text-foreground block mb-2">
-                                Nom
+                                {t('login.name')}
                             </label>
                             <input
                                 type="text"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
-                                placeholder="Ton nom"
+                                placeholder={t('login.name.placeholder')}
                                 className="w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                                 required={isSignup}
                             />
@@ -103,7 +105,7 @@ const LoginScreen = ({ onLoginSuccess }: LoginScreenProps) => {
                     {/* Email */}
                     <div>
                         <label className="text-sm font-medium text-foreground block mb-2">
-                            Email
+                            {t('login.email')}
                         </label>
                         <div className="relative">
                             <Mail
@@ -114,7 +116,7 @@ const LoginScreen = ({ onLoginSuccess }: LoginScreenProps) => {
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                placeholder="adresse e-mail"
+                                placeholder={t('login.email.placeholder')}
                                 className="w-full pl-12 pr-4 py-3 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                                 required
                             />
@@ -124,7 +126,7 @@ const LoginScreen = ({ onLoginSuccess }: LoginScreenProps) => {
                     {/* Mot de passe */}
                     <div>
                         <label className="text-sm font-medium text-foreground block mb-2">
-                            Mot de passe
+                            {t('login.password')}
                         </label>
                         <div className="relative">
                             <Lock
@@ -135,7 +137,7 @@ const LoginScreen = ({ onLoginSuccess }: LoginScreenProps) => {
                                 type={showPassword ? "text" : "password"}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                placeholder="mot de passe"
+                                placeholder={t('login.password.placeholder')}
                                 className="w-full pl-12 pr-12 py-3 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                                 required
                             />
@@ -171,18 +173,18 @@ const LoginScreen = ({ onLoginSuccess }: LoginScreenProps) => {
                         className="w-full mt-6"
                     >
                         {loading
-                            ? "Chargement..."
+                            ? t('button.loading')
                             : isSignup
-                              ? "S'inscrire"
-                              : "Se connecter"}
+                              ? t('login.signup')
+                              : t('login.login')}
                     </McButton>
 
                     {/* Interrupteur inscription/connexion */}
                     <div className="text-center pt-2">
                         <p className="text-sm text-muted-foreground">
                             {isSignup
-                                ? "Tu as déjà un compte? "
-                                : "Tu n'as pas de compte? "}
+                                ? t('login.already-have-account')
+                                : t('login.dont-have-account')}
                             <button
                                 type="button"
                                 onClick={() => {
@@ -194,7 +196,7 @@ const LoginScreen = ({ onLoginSuccess }: LoginScreenProps) => {
                                 }}
                                 className="text-primary font-semibold hover:underline"
                             >
-                                {isSignup ? "Se connecter" : "S'inscrire"}
+                                {isSignup ? t('login.login') : t('login.signup')}
                             </button>
                         </p>
                     </div>

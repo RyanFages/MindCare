@@ -13,6 +13,7 @@ import Screen from "@/components/mindcare/Screen";
 import TopBar from "@/components/mindcare/TopBar";
 import McButton from "@/components/mindcare/McButton";
 import { H1, TextBody } from "@/components/mindcare/Typography";
+import { useLanguage } from "@/lib/LanguageContext";
 
 interface CheckinScreenProps {
     onComplete: (
@@ -23,6 +24,7 @@ interface CheckinScreenProps {
 }
 
 const CheckinScreen = ({ onComplete, onBack }: CheckinScreenProps) => {
+    const { t } = useLanguage();
     const [step, setStep] = useState(1);
     const [energy, setEnergy] = useState(50);
     const [selectedConcerns, setSelectedConcerns] = useState<string[]>([]);
@@ -31,45 +33,45 @@ const CheckinScreen = ({ onComplete, onBack }: CheckinScreenProps) => {
     const concernOptions = [
         {
             id: "work",
-            label: "Travail",
+            label: t("checkin.concern.work"),
             icon: BarChart2,
             color: "bg-secondary",
         },
         {
             id: "family",
-            label: "Famille",
+            label: t("checkin.concern.family"),
             icon: HeartHandshake,
             color: "bg-mc-peach",
         },
         {
             id: "health",
-            label: "Santé",
+            label: t("checkin.concern.health"),
             icon: Activity,
             color: "bg-mc-blue-light",
         },
         {
             id: "future",
-            label: "Avenir",
+            label: t("checkin.concern.future"),
             icon: Calendar,
             color: "bg-mc-purple",
         },
         {
             id: "none",
-            label: "Rien de spécial",
+            label: t("checkin.concern.none"),
             icon: CheckCircle,
             color: "bg-primary",
         },
     ];
 
     const moodOptions = [
-        { label: "Calme", type: "good" },
-        { label: "Motivé", type: "good" },
-        { label: "Reconnaissant", type: "good" },
-        { label: "Excité", type: "good" },
-        { label: "Anxieux", type: "support" },
-        { label: "Fatigué", type: "support" },
-        { label: "Triste", type: "support" },
-        { label: "Perdu", type: "support" },
+        { label: t("checkin.mood.calm"), type: "good" },
+        { label: t("checkin.mood.motivated"), type: "good" },
+        { label: t("checkin.mood.grateful"), type: "good" },
+        { label: t("checkin.mood.excited"), type: "good" },
+        { label: t("checkin.mood.anxious"), type: "support" },
+        { label: t("checkin.mood.tired"), type: "support" },
+        { label: t("checkin.mood.sad"), type: "support" },
+        { label: t("checkin.mood.lost"), type: "support" },
     ];
 
     const handleConcernToggle = (id: string) => {
@@ -103,7 +105,7 @@ const CheckinScreen = ({ onComplete, onBack }: CheckinScreenProps) => {
                 result = "balanced";
             }
             const concernLabels = selectedConcerns.map((id) => {
-                if (id === "none") return "Rien de spécial";
+                if (id === "none") return t("checkin.concern.none");
                 return concernOptions.find((opt) => opt.id === id)?.label || id;
             });
             onComplete(result, concernLabels);
@@ -119,7 +121,7 @@ const CheckinScreen = ({ onComplete, onBack }: CheckinScreenProps) => {
         <Screen>
             <div className="min-h-full flex flex-col">
                 <TopBar
-                    title={`Check-in ${step}/3`}
+                    title={t("checkin.title", { step })}
                     showBack
                     onBack={prevStep}
                     rightAction={
@@ -149,11 +151,10 @@ const CheckinScreen = ({ onComplete, onBack }: CheckinScreenProps) => {
                         {step === 1 && (
                             <>
                                 <H1 className="mb-4 text-[28px]">
-                                    Comment est votre énergie ?
+                                    {t("checkin.step1.title")}
                                 </H1>
                                 <TextBody className="text-muted-foreground mb-12">
-                                    Déplacez le curseur selon votre ressenti du
-                                    moment.
+                                    {t("checkin.step1.subtitle")}
                                 </TextBody>
                                 <div className="py-10 px-4">
                                     <input
@@ -167,8 +168,8 @@ const CheckinScreen = ({ onComplete, onBack }: CheckinScreenProps) => {
                                         className="w-full h-2 bg-border rounded-lg appearance-none cursor-pointer accent-primary"
                                     />
                                     <div className="flex justify-between mt-4 text-[13px] text-mc-text-muted font-medium font-body">
-                                        <span>Faible</span>
-                                        <span>Au top</span>
+                                        <span>{t("checkin.energy.low")}</span>
+                                        <span>{t("checkin.energy.high")}</span>
                                     </div>
                                     <div className="mt-8 text-center text-[40px] font-medium font-display text-foreground">
                                         {energy}%
@@ -180,10 +181,10 @@ const CheckinScreen = ({ onComplete, onBack }: CheckinScreenProps) => {
                         {step === 2 && (
                             <>
                                 <H1 className="mb-4 text-[28px]">
-                                    Qu'est-ce qui vous préoccupe ?
+                                    {t("checkin.step2.title")}
                                 </H1>
                                 <TextBody className="text-muted-foreground mb-8">
-                                    Sélectionnez ce qui s'applique.
+                                    {t("checkin.step2.subtitle")}
                                 </TextBody>
                                 <div className="space-y-3">
                                     {concernOptions.map((item) => {
@@ -235,8 +236,11 @@ const CheckinScreen = ({ onComplete, onBack }: CheckinScreenProps) => {
                         {step === 3 && (
                             <>
                                 <H1 className="mb-4 text-[28px]">
-                                    Un mot pour décrire l'instant ?
+                                    {t("checkin.step3.title")}
                                 </H1>
+                                <TextBody className="text-muted-foreground mb-8">
+                                    {t("checkin.step3.subtitle")}
+                                </TextBody>
                                 <div className="flex flex-wrap gap-3">
                                     {moodOptions.map((mood) => (
                                         <button

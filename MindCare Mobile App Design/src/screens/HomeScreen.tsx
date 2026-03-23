@@ -7,17 +7,20 @@ import BrandLogo from '@/components/mindcare/BrandLogo';
 import McButton from '@/components/mindcare/McButton';
 import McCard from '@/components/mindcare/McCard';
 import { H1, H2, TextBody } from '@/components/mindcare/Typography';
+import { useAuth } from '@/lib/AuthContext';
+
 
 interface HomeScreenProps {
   onNavigate: (screen: string) => void;
 }
 
 const HomeScreen = ({ onNavigate }: HomeScreenProps) => {
+  const { user } = useAuth();
   const { t } = useLanguage();
   const quickActions = [
-    { label: 'Comprendre', icon: BookOpen, color: 'bg-mc-blue-light', target: 'learn' },
-    { label: 'Parler', icon: HeartHandshake, color: 'bg-mc-purple', target: 'help' },
-    { label: 'Respirer', icon: Volume2, color: 'bg-secondary', target: 'learn' },
+    { label: t('home.label.learn'), icon: BookOpen, color: 'bg-mc-blue-light', target: 'learn' },
+    { label: t('home.label.help'), icon: HeartHandshake, color: 'bg-mc-purple', target: 'help' },
+    { label: t('home.label.breathing'), icon: Volume2, color: 'bg-secondary', target: 'learn' },
   ];
 
   return (
@@ -25,8 +28,8 @@ const HomeScreen = ({ onNavigate }: HomeScreenProps) => {
       {/* Immersive Header */}
       <div className="pt-8 pb-6 px-4 flex flex-col items-center text-center bg-gradient-to-b from-background via-card to-background">
         <BrandLogo size="small" className="mb-6 w-8 h-8" />
-        <H1 className="mb-2 text-[32px]">{t("home.welcome")}, Sarah</H1>
-        <TextBody className="text-muted-foreground text-[16px]">Comment te sens-tu aujourd'hui ?</TextBody>
+        <H1 className="mb-2 text-[32px]">{t("home.welcome")}, {user?.name}</H1>
+        <TextBody className="text-muted-foreground text-[16px]">{t('home.greetings')}</TextBody>
       </div>
 
       <div className="px-4 space-y-8">
@@ -36,10 +39,10 @@ const HomeScreen = ({ onNavigate }: HomeScreenProps) => {
             <div className="mb-4 p-3 rounded-full bg-primary/10 text-primary backdrop-blur-sm">
               <Calendar size={24} />
             </div>
-            <H2 className="text-foreground text-[22px] mb-2">Ton moment</H2>
-            <TextBody className="text-muted-foreground mb-8 font-light">2 minutes pour toi, maintenant.</TextBody>
+            <H2 className="text-foreground text-[22px] mb-2">{t('home.your-moment')}</H2>
+            <TextBody className="text-muted-foreground mb-8 font-light">{t('home.your-moment.subtitle')}</TextBody>
             <McButton variant="primary" className="w-full h-14 text-[18px] shadow-[0_4px_14px_rgba(242,185,160,0.4)]">
-              Commencer
+              {t('button.start')}
             </McButton>
           </div>
           <div className="absolute inset-0 bg-gradient-to-br from-card to-muted z-0"></div>
@@ -72,8 +75,8 @@ const HomeScreen = ({ onNavigate }: HomeScreenProps) => {
             <Clock size={20} className="text-primary" />
           </div>
           <div className="flex-1">
-            <h4 className="font-display font-medium text-foreground text-[15px]">Historique du bien-être</h4>
-            <p className="font-body text-[13px] text-muted-foreground">Suivre ton évolution</p>
+            <h4 className="font-display font-medium text-foreground text-[15px]">{t('home.history')}</h4>
+            <p className="font-body text-[13px] text-muted-foreground">{t('home.history.subtitle')}</p>
           </div>
         </McCard>
 
@@ -86,14 +89,14 @@ const HomeScreen = ({ onNavigate }: HomeScreenProps) => {
             <BookText size={20} className="text-primary" />
           </div>
           <div className="flex-1">
-            <h4 className="font-display font-medium text-foreground text-[15px]">Mon journal</h4>
-            <p className="font-body text-[13px] text-muted-foreground">Écrire tes pensées</p>
+            <h4 className="font-display font-medium text-foreground text-[15px]">{t('home.journal')}</h4>
+            <p className="font-body text-[13px] text-muted-foreground">{t('home.journal.subtitle')}</p>
           </div>
         </McCard>
 
         {/* Pour toi aujourd'hui */}
         <div className="pb-4">
-          <H2 className="mb-4 text-[20px] px-1">Pour toi aujourd'hui</H2>
+          <H2 className="mb-4 text-[20px] px-1">{t('home.for-you-today')}</H2>
           <div className="space-y-4">
             <McCard className="flex items-center p-4 gap-4 active:scale-[0.98] transition-transform cursor-pointer" onClick={() => onNavigate('learn')}>
               <img
@@ -102,8 +105,8 @@ const HomeScreen = ({ onNavigate }: HomeScreenProps) => {
                 alt="Nature"
               />
               <div className="flex-1">
-                <h4 className="font-display font-medium text-foreground text-[16px]">Respiration guidée</h4>
-                <p className="font-body text-[13px] text-muted-foreground mt-1">5 min • Relaxation</p>
+                <h4 className="font-display font-medium text-foreground text-[16px]">{t('home.breathing')}</h4>
+                <p className="font-body text-[13px] text-muted-foreground mt-1">5 min • {t('home.relaxation')}</p>
               </div>
               <button className="w-10 h-10 rounded-full bg-background flex items-center justify-center text-foreground">
                 <PlayCircle size={20} />
@@ -113,7 +116,7 @@ const HomeScreen = ({ onNavigate }: HomeScreenProps) => {
             {/* Micro-card bienveillante */}
             <div className="px-4 py-6 rounded-[20px] bg-background border border-border text-center border-dashed">
               <p className="font-display text-muted-foreground text-[14px] italic leading-relaxed">
-                "Tu n'as rien à réussir ici. Juste être là."
+                "{t('home.wise.words')}"
               </p>
             </div>
           </div>

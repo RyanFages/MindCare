@@ -17,6 +17,7 @@ import McCard from "@/components/mindcare/McCard";
 import McButton from "@/components/mindcare/McButton";
 import BrandLogo from "@/components/mindcare/BrandLogo";
 import { H1, TextBody } from "@/components/mindcare/Typography";
+import { useLanguage } from "@/lib/LanguageContext";
 
 interface SettingsScreenProps {
     onNavigate: (screen: string) => void;
@@ -56,8 +57,21 @@ const SettingItem = ({
 const SettingsScreen = ({ onNavigate }: SettingsScreenProps) => {
     const { theme } = useTheme();
     const { user, logout } = useAuth();
+    const { t, language } = useLanguage();
+
     const themeLabel =
-        theme === "dark" ? "Sombre" : theme === "system" ? "Système" : "Clair";
+        theme === "dark"
+            ? t("appearance.theme.dark")
+            : theme === "system"
+              ? t("appearance.theme.system")
+              : t("appearance.theme.light");
+
+    const languageLabel =
+        language === "fr"
+            ? "Français"
+            : language === "es"
+              ? "Español"
+              : "English";
 
     const handleLogout = () => {
         logout();
@@ -72,7 +86,7 @@ const SettingsScreen = ({ onNavigate }: SettingsScreenProps) => {
         >
             <div className="pt-2 px-4 pb-4">
                 <div className="mb-8 mt-4">
-                    <H1>Réglages</H1>
+                    <H1>{t("settings.title")}</H1>
                 </div>
 
                 <McCard className="p-4 mb-6">
@@ -94,30 +108,30 @@ const SettingsScreen = ({ onNavigate }: SettingsScreenProps) => {
                         fullWidth
                         onClick={() => onNavigate("profile-edit")}
                     >
-                        Modifier le profil
+                        {t("settings.profile.edit")}
                     </McButton>
                 </McCard>
 
                 <section>
                     <h3 className="text-[14px] font-semibold text-mc-text-muted uppercase tracking-wider mb-2 pl-2 font-body">
-                        Compte
+                        {t("settings.account")}
                     </h3>
                     <McCard className="px-4">
                         <SettingItem
                             icon={Bell}
-                            label="Notifications"
-                            value="Activées"
+                            label={t("settings.notifications")}
+                            value={t("settings.notifications.enabled")}
                             onClick={() => onNavigate("settings-notifications")}
                         />
                         <SettingItem
                             icon={Lock}
-                            label="Confidentialité"
+                            label={t("settings.privacy")}
                             onClick={() => onNavigate("settings-privacy")}
                         />
                         <SettingItem
                             icon={CreditCard}
-                            label="Abonnement"
-                            value="Gratuit"
+                            label={t("settings.subscription")}
+                            value={t("settings.plan.free")}
                             onClick={() => onNavigate("settings-subscription")}
                         />
                     </McCard>
@@ -125,24 +139,24 @@ const SettingsScreen = ({ onNavigate }: SettingsScreenProps) => {
 
                 <section className="mt-6">
                     <h3 className="text-[14px] font-semibold text-mc-text-muted uppercase tracking-wider mb-2 pl-2 font-body">
-                        Application
+                        {t("settings.app")}
                     </h3>
                     <McCard className="px-4">
                         <SettingItem
                             icon={Paintbrush}
-                            label="Apparence"
+                            label={t("settings.appearance")}
                             value={themeLabel}
                             onClick={() => onNavigate("settings-appearance")}
                         />
                         <SettingItem
                             icon={Languages}
-                            label="Langue"
-                            value="Français"
+                            label={t("settings.language")}
+                            value={languageLabel}
                             onClick={() => onNavigate("settings-language")}
                         />
                         <SettingItem
                             icon={Info}
-                            label="À propos"
+                            label={t("settings.about")}
                             onClick={() => onNavigate("settings-about")}
                         />
                     </McCard>
@@ -150,7 +164,7 @@ const SettingsScreen = ({ onNavigate }: SettingsScreenProps) => {
 
                 <section className="mt-6">
                     <h3 className="text-[14px] font-semibold text-mc-text-muted uppercase tracking-wider mb-2 pl-2 font-body">
-                        Utilisateur
+                        {t("settings.profile")}
                     </h3>
                     <McCard className="px-4">
                         <div
@@ -163,7 +177,7 @@ const SettingsScreen = ({ onNavigate }: SettingsScreenProps) => {
                                     className="text-destructive"
                                 />
                                 <span className="text-destructive font-medium font-body">
-                                    Déconnexion
+                                    {t("button.logout")}
                                 </span>
                             </div>
                         </div>
