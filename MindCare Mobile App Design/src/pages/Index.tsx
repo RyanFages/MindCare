@@ -100,7 +100,7 @@ const Index = () => {
                             onComplete={(type, concerns) => {
                                 setResultType(type);
                                 setResultConcerns(concerns);
-                                saveCheckinEntry(type, concerns);
+                                void saveCheckinEntry(type, concerns);
                                 navigate("result");
                             }}
                             onBack={goBack}

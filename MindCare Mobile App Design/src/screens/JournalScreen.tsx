@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Plus, BookText, Trash2, ChevronRight } from "lucide-react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Screen from "@/components/mindcare/Screen";
@@ -21,22 +21,31 @@ interface JournalScreenProps {
 
 const JournalScreen = ({ onNavigate, onBack }: JournalScreenProps) => {
     const { t } = useLanguage();
-    const [entries, setEntries] = useState<JournalEntry[]>(getAllEntries);
+    const [entries, setEntries] = useState<JournalEntry[]>([]);
     const [isWriting, setIsWriting] = useState(false);
     const [text, setText] = useState("");
     const [expandedId, setExpandedId] = useState<string | null>(null);
 
-    const handleSave = () => {
+    useEffect(() => {
+        const loadEntries = async () => {
+            const loaded = await getAllEntries();
+            setEntries(loaded);
+        };
+
+        void loadEntries();
+    }, []);
+
+    const handleSave = async () => {
         if (!text.trim()) return;
-        addEntry(text.trim());
+        await addEntry(text.trim());
         setText("");
         setIsWriting(false);
-        setEntries(getAllEntries());
+        setEntries(await getAllEntries());
     };
 
-    const handleDelete = (id: string) => {
-        deleteEntry(id);
-        setEntries(getAllEntries());
+    const handleDelete = async (id: string) => {
+        await deleteEntry(id);
+        setEntries(await getAllEntries());
         if (expandedId === id) setExpandedId(null);
     };
 
@@ -158,9 +167,9 @@ const JournalScreen = ({ onNavigate, onBack }: JournalScreenProps) => {
                                                 {entry.text}
                                             </p>
                                             <button
-                                                onClick={() =>
-                                                    handleDelete(entry.id)
-                                                }
+                                                onClick={() => {
+                                                    void handleDelete(entry.id);
+                                                }}
                                                 className="flex items-center gap-2 text-destructive text-[13px] font-medium"
                                             >
                                                 <Trash2 size={14} />

@@ -5,6 +5,7 @@ import {
     HeartHandshake,
     ChevronRight,
 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/lib/LanguageContext";
 import Screen from "@/components/mindcare/Screen";
@@ -18,6 +19,21 @@ export interface CheckinEntry {
     date: string; // ISO string
     type: "balanced" | "watch" | "support";
     concerns: string[];
+}
+
+const API_BASE_URL =
+    (import.meta.env.VITE_API_URL as string | undefined) ||
+    "http://localhost:3000/api";
+
+function getCurrentUserEmail(): string | null {
+    try {
+        const raw = localStorage.getItem("mindcare_user");
+        if (!raw) return null;
+        const parsed = JSON.parse(raw);
+        return parsed?.email ? String(parsed.email) : null;
+    } catch {
+        return null;
+    }
 }
 
 interface HistoryScreenProps {
@@ -49,28 +65,43 @@ const profileMeta: Record<
     },
 };
 
-export function getCheckinHistory(): CheckinEntry[] {
+export async function getCheckinHistory(): Promise<CheckinEntry[]> {
+    const email = getCurrentUserEmail();
+    if (!email) return [];
+
     try {
-        const raw = localStorage.getItem("mindcare_checkin_history");
-        return raw ? JSON.parse(raw) : [];
+        const response = await fetch(
+            `${API_BASE_URL}/evals?email=${encodeURIComponent(email)}`,
+        );
+        if (!response.ok) return [];
+
+        const data = await response.json();
+        if (!Array.isArray(data.entries)) return [];
+
+        return data.entries as CheckinEntry[];
     } catch {
         return [];
     }
 }
 
-export function saveCheckinEntry(
+export async function saveCheckinEntry(
     type: "balanced" | "watch" | "support",
     concerns: string[],
 ) {
-    const history = getCheckinHistory();
-    const entry: CheckinEntry = {
-        id: crypto.randomUUID(),
-        date: new Date().toISOString(),
-        type,
-        concerns,
-    };
-    history.unshift(entry);
-    localStorage.setItem("mindcare_checkin_history", JSON.stringify(history));
+    const email = getCurrentUserEmail();
+    if (!email) return;
+
+    try {
+        await fetch(`${API_BASE_URL}/evals`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, type, concerns }),
+        });
+    } catch {
+        // Keep UX responsive even if history save fails silently.
+    }
 }
 
 function formatDate(iso: string) {
@@ -92,7 +123,16 @@ function formatTime(iso: string) {
 
 const HistoryScreen = ({ onNavigate, onBack }: HistoryScreenProps) => {
     const { t } = useLanguage();
-    const entries = getCheckinHistory();
+    const [entries, setEntries] = useState<CheckinEntry[]>([]);
+
+    useEffect(() => {
+        const loadEntries = async () => {
+            const loaded = await getCheckinHistory();
+            setEntries(loaded);
+        };
+
+        void loadEntries();
+    }, []);
 
     return (
         <Screen
