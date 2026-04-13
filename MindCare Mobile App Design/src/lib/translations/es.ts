@@ -186,7 +186,7 @@ export const es = {
         "Este testimonio fue compartido con consentimiento del autor y moderado antes de su publicación.",
 
     // Checkin Screen
-    "checkin.title": "Verificar {{step}}/3",
+    "checkin.title": "Verificar",
     "checkin.step1.title": "¿Cómo es tu energía?",
     "checkin.step1.subtitle":
         "Mueve el deslizador según lo que sientas ahora mismo.",
@@ -266,6 +266,8 @@ export const es = {
     "result.recommendation.nightline": "Nightline",
     "result.recommendation.nightline.desc":
         "Estudiantes capacitados aquí para escuchar",
+    "result.quote.title": "Cita personalizada",
+    "result.quote.loading": "Generando tu cita...",
 
     // Disclaimer Screen
     "disclaimer.title": "Bienvenido a MindCare",

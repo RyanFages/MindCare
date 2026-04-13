@@ -187,7 +187,7 @@ export const ja = {
         "このお客様の声は著者の同意と共に共有され、公開前にモデレートされました。",
 
     // Checkin Screen
-    "checkin.title": "チェックイン {{step}}/3",
+    "checkin.title": "チェックイン",
     "checkin.step1.title": "あなたのエネルギーはどうですか？",
     "checkin.step1.subtitle":
         "現在感じていることに応じてスライダーを移動してください。",
@@ -259,6 +259,8 @@ export const ja = {
     "result.recommendation.relaxation.desc": "終了するための落ち着きの瞬間",
     "result.recommendation.nightline": "ナイトラインが",
     "result.recommendation.nightline.desc": "ここで聞くように訓練された学生",
+    "result.quote.title": "パーソナライズされた引用",
+    "result.quote.loading": "引用を生成しています...",
 
     // Disclaimer Screen
     "disclaimer.title": "MindCareへようこそ",

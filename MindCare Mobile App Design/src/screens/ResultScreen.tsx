@@ -23,6 +23,8 @@ type ResultType = "balanced" | "watch" | "support";
 interface ResultScreenProps {
     type: ResultType;
     concerns?: string[];
+    generatedQuote?: string | null;
+    isQuoteLoading?: boolean;
     onNavigate: (screen: string) => void;
 }
 
@@ -38,6 +40,8 @@ interface Recommendation {
 const ResultScreen = ({
     type,
     concerns = [],
+    generatedQuote = null,
+    isQuoteLoading = false,
     onNavigate,
 }: ResultScreenProps) => {
     const { t } = useLanguage();
@@ -221,6 +225,38 @@ const ResultScreen = ({
                         </TextBody>
                     </motion.div>
                 </div>
+
+                {(isQuoteLoading || generatedQuote) && (
+                    <motion.div
+                        initial={{ y: 24, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.45, duration: 0.4 }}
+                        className="mb-8"
+                    >
+                        <McCard className="p-5 border border-primary/20 bg-primary/5">
+                            <div className="flex items-center gap-2 mb-2">
+                                <Sparkles size={18} className="text-primary" />
+                                <p className="font-display text-[14px] text-primary">
+                                    {t("result.quote.title")}
+                                </p>
+                            </div>
+
+                            {isQuoteLoading ? (
+                                <div className="space-y-2">
+                                    <TextBody className="text-[14px] text-muted-foreground">
+                                        {t("result.quote.loading")}
+                                    </TextBody>
+                                    <div className="h-2.5 w-4/5 rounded-full bg-muted animate-pulse" />
+                                    <div className="h-2.5 w-3/5 rounded-full bg-muted animate-pulse" />
+                                </div>
+                            ) : (
+                                <TextBody className="italic leading-relaxed text-[15px]">
+                                    "{generatedQuote}"
+                                </TextBody>
+                            )}
+                        </McCard>
+                    </motion.div>
+                )}
 
                 {/* Personalized recommendations */}
                 <motion.div

@@ -1,10 +1,4 @@
-import {
-    Clock,
-    Smile,
-    AlertCircle,
-    HeartHandshake,
-    ChevronRight,
-} from "lucide-react";
+import { Clock, Smile, AlertCircle, HeartHandshake } from "lucide-react";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/lib/LanguageContext";
@@ -19,6 +13,10 @@ export interface CheckinEntry {
     date: string; // ISO string
     type: "balanced" | "watch" | "support";
     concerns: string[];
+}
+
+export interface CheckinSaveResult {
+    quote: string | null;
 }
 
 const API_BASE_URL =
@@ -87,20 +85,33 @@ export async function getCheckinHistory(): Promise<CheckinEntry[]> {
 export async function saveCheckinEntry(
     type: "balanced" | "watch" | "support",
     concerns: string[],
-) {
+): Promise<CheckinSaveResult> {
     const email = getCurrentUserEmail();
-    if (!email) return;
+    if (!email) return { quote: null };
 
     try {
-        await fetch(`${API_BASE_URL}/evals`, {
+        const response = await fetch(`${API_BASE_URL}/evals`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({ email, type, concerns }),
         });
+
+        if (!response.ok) {
+            return { quote: null };
+        }
+
+        const data = await response.json();
+        const quote =
+            typeof data?.automation?.quote === "string"
+                ? data.automation.quote
+                : null;
+
+        return { quote };
     } catch {
         // Keep UX responsive even if history save fails silently.
+        return { quote: null };
     }
 }
 

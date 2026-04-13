@@ -12,6 +12,77 @@ app.use(cors());
 app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
+const N8N_WEBHOOK_URL = process.env.N8N_WEBHOOK_URL || "";
+
+async function sendEvalToN8n(payload) {
+    if (!N8N_WEBHOOK_URL) {
+        return {
+            skipped: true,
+            reason: "missing-webhook-url",
+        };
+    }
+    if (typeof fetch !== "function") {
+        console.warn(
+            "Webhook n8n ignore: fetch indisponible dans cet environnement Node.",
+        );
+        return {
+            skipped: true,
+            reason: "fetch-unavailable",
+        };
+    }
+
+    const startedAt = Date.now();
+
+    try {
+        console.log("Envoi eval a n8n webhook:", payload);
+        const response = await fetch(N8N_WEBHOOK_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+        });
+
+        const rawBody = await response.text();
+        let parsedBody = rawBody;
+
+        if (rawBody) {
+            try {
+                parsedBody = JSON.parse(rawBody);
+            } catch {
+                // Garde le body brut si la reponse n'est pas du JSON.
+            }
+        }
+
+        const durationMs = Date.now() - startedAt;
+        const payloadToReturn = {
+            ok: response.ok,
+            status: response.status,
+            statusText: response.statusText,
+            durationMs,
+            body: parsedBody,
+        };
+
+        console.log("Reponse n8n webhook:", payloadToReturn);
+
+        if (!response.ok) {
+            console.error("Webhook n8n a retourne un statut en erreur.");
+        }
+
+        return payloadToReturn;
+    } catch (error) {
+        const durationMs = Date.now() - startedAt;
+        const payloadToReturn = {
+            ok: false,
+            status: 0,
+            statusText: "FETCH_ERROR",
+            durationMs,
+            error,
+        };
+        console.error("Erreur webhook n8n:", payloadToReturn);
+        return payloadToReturn;
+    }
+}
 
 app.get("/api/health", (_req, res) => {
     res.json({ ok: true });
@@ -249,12 +320,35 @@ app.post("/api/evals", async (req, res) => {
             type,
         });
 
+        const responseEntry = {
+            id: String(created._id),
+            date: created.date,
+            type: created.type,
+            concerns: Array.isArray(created.concern) ? created.concern : [],
+        };
+
+        const n8nResponse = await sendEvalToN8n({
+            event: "eval.created",
+            user: {
+                id: String(user._id),
+                email: user.email,
+            },
+            entry: responseEntry,
+            createdAt: new Date().toISOString(),
+        });
+
+        const maybeBody = n8nResponse?.body;
+        const generatedQuote =
+            maybeBody &&
+            typeof maybeBody === "object" &&
+            typeof maybeBody.value === "string"
+                ? maybeBody.value
+                : null;
+
         return res.status(201).json({
-            entry: {
-                id: String(created._id),
-                date: created.date,
-                type: created.type,
-                concerns: Array.isArray(created.concern) ? created.concern : [],
+            entry: responseEntry,
+            automation: {
+                quote: generatedQuote,
             },
         });
     } catch (error) {

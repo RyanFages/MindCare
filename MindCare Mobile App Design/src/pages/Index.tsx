@@ -37,6 +37,8 @@ const Index = () => {
         "balanced" | "watch" | "support"
     >("balanced");
     const [resultConcerns, setResultConcerns] = useState<string[]>([]);
+    const [resultQuote, setResultQuote] = useState<string | null>(null);
+    const [isResultQuoteLoading, setIsResultQuoteLoading] = useState(false);
     const [selectedContent, setSelectedContent] = useState<ContentItem | null>(
         null,
     );
@@ -100,8 +102,17 @@ const Index = () => {
                             onComplete={(type, concerns) => {
                                 setResultType(type);
                                 setResultConcerns(concerns);
-                                void saveCheckinEntry(type, concerns);
+                                setResultQuote(null);
+                                setIsResultQuoteLoading(true);
                                 navigate("result");
+
+                                void saveCheckinEntry(type, concerns)
+                                    .then((result) => {
+                                        setResultQuote(result.quote);
+                                    })
+                                    .finally(() => {
+                                        setIsResultQuoteLoading(false);
+                                    });
                             }}
                             onBack={goBack}
                         />
@@ -111,6 +122,8 @@ const Index = () => {
                         <ResultScreen
                             type={resultType}
                             concerns={resultConcerns}
+                            generatedQuote={resultQuote}
+                            isQuoteLoading={isResultQuoteLoading}
                             onNavigate={navigate}
                         />
                     )}

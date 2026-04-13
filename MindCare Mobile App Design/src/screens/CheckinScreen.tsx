@@ -121,7 +121,7 @@ const CheckinScreen = ({ onComplete, onBack }: CheckinScreenProps) => {
         <Screen>
             <div className="min-h-full flex flex-col">
                 <TopBar
-                    title={t("checkin.title", { step })}
+                    title={t("checkin.title")}
                     showBack
                     onBack={prevStep}
                     rightAction={

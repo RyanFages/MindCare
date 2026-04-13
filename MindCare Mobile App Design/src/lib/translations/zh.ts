@@ -176,7 +176,7 @@ export const zh = {
     "content.testimonial.consent": "本证明已获得作者同意并在发布前进行了审核。",
 
     // Checkin Screen
-    "checkin.title": "签到 {{step}}/3",
+    "checkin.title": "签到",
     "checkin.step1.title": "您的精力如何？",
     "checkin.step1.subtitle": "根据您现在的感受移动滑块。",
     "checkin.energy.low": "低",
@@ -245,6 +245,8 @@ export const zh = {
     "result.recommendation.relaxation.desc": "结束时的平静时刻",
     "result.recommendation.nightline": "夜间热线",
     "result.recommendation.nightline.desc": "这里受过培训的学生来倾听",
+    "result.quote.title": "个性化语录",
+    "result.quote.loading": "正在生成你的语录...",
 
     // Disclaimer Screen
     "disclaimer.title": "欢迎使用MindCare",

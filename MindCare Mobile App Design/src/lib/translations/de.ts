@@ -190,7 +190,7 @@ export const de = {
         "Dieses Zeugnis wurde mit Zustimmung des Autors freigegeben und vor der Veröffentlichung moderiert.",
 
     // Checkin Screen
-    "checkin.title": "Check-in {{step}}/3",
+    "checkin.title": "Check-in",
     "checkin.step1.title": "Wie ist Ihre Energie?",
     "checkin.step1.subtitle":
         "Verschieben Sie den Regler entsprechend Ihrem momentanen Gefühl.",
@@ -269,6 +269,8 @@ export const de = {
         "Ein Moment der Ruhe zum Abschluss",
     "result.recommendation.nightline": "Nightline",
     "result.recommendation.nightline.desc": "Geschulte Studenten zum Zuhören",
+    "result.quote.title": "Personliches Zitat",
+    "result.quote.loading": "Dein Zitat wird erstellt...",
 
     // Disclaimer Screen
     "disclaimer.title": "Willkommen bei MindCare",

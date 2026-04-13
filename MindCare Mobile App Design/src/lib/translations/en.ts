@@ -187,7 +187,7 @@ export const en = {
         "This testimonial was shared with the author's consent and moderated before publication.",
 
     // Checkin Screen
-    "checkin.title": "Check-in {{step}}/3",
+    "checkin.title": "Check-in",
     "checkin.step1.title": "How is your energy?",
     "checkin.step1.subtitle":
         "Move the slider according to what you feel right now.",
@@ -262,6 +262,8 @@ export const en = {
     "result.recommendation.relaxation.desc": "A moment of calm to end well",
     "result.recommendation.nightline": "Nightline",
     "result.recommendation.nightline.desc": "Trained students here to listen",
+    "result.quote.title": "Personalized quote",
+    "result.quote.loading": "Generating your quote...",
 
     // Disclaimer Screen
     "disclaimer.title": "Welcome to MindCare",

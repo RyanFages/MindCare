@@ -187,7 +187,7 @@ export const fr = {
         "Ce témoignage a été partagé avec le consentement de l'auteur et modéré avant publication.",
 
     // Checkin Screen
-    "checkin.title": "Bilan {{step}}/3",
+    "checkin.title": "Bilan",
     "checkin.step1.title": "Comment est votre énergie?",
     "checkin.step1.subtitle":
         "Déplacez le curseur selon ce que vous ressentez maintenant.",
@@ -268,6 +268,8 @@ export const fr = {
         "Un moment de calme pour finir bien",
     "result.recommendation.nightline": "Nightline",
     "result.recommendation.nightline.desc": "Des étudiants formés à l'écoute",
+    "result.quote.title": "Citation personnalisée",
+    "result.quote.loading": "Génération de votre citation...",
 
     // Disclaimer Screen
     "disclaimer.title": "Bienvenue sur MindCare",

@@ -188,7 +188,7 @@ export const pt = {
         "Este depoimento foi compartilhado com o consentimento do autor e moderado antes da publicação.",
 
     // Checkin Screen
-    "checkin.title": "Check-in {{step}}/3",
+    "checkin.title": "Check-in",
     "checkin.step1.title": "Como é sua energia?",
     "checkin.step1.subtitle":
         "Mova o controle deslizante de acordo com o que você sente agora.",
@@ -267,6 +267,8 @@ export const pt = {
     "result.recommendation.nightline": "Nightline",
     "result.recommendation.nightline.desc":
         "Estudantes treinados aqui para ouvir",
+    "result.quote.title": "Citacao personalizada",
+    "result.quote.loading": "Gerando sua citacao...",
 
     // Disclaimer Screen
     "disclaimer.title": "Bem-vindo ao MindCare",
