@@ -17,6 +17,7 @@ interface AuthContextType {
     login: (email: string, password: string) => Promise<boolean>;
     logout: () => void;
     signup: (email: string, password: string, name: string) => Promise<boolean>;
+    updateProfile: (name: string, email: string) => Promise<boolean>;
 }
 
 interface AuthApiResponse {
@@ -30,6 +31,7 @@ const AuthContext = createContext<AuthContextType>({
     login: async () => false,
     logout: () => {},
     signup: async () => false,
+    updateProfile: async () => false,
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -155,9 +157,53 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setIsAuthenticated(false);
     };
 
+    const updateProfile = async (
+        name: string,
+        email: string,
+    ): Promise<boolean> => {
+        if (!user) return false;
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/auth/profile`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    currentEmail: user.email,
+                    name,
+                    email,
+                }),
+            });
+
+            if (!response.ok) {
+                await logApiHttpError("updateProfile", response);
+                return false;
+            }
+
+            const data: AuthApiResponse = await response.json();
+            if (!data.user) return false;
+
+            localStorage.setItem("mindcare_user", JSON.stringify(data.user));
+            setUser(data.user);
+            setIsAuthenticated(true);
+            return true;
+        } catch (error) {
+            console.error("Erreur update profile API:", error);
+            return false;
+        }
+    };
+
     return (
         <AuthContext.Provider
-            value={{ user, isAuthenticated, login, logout, signup }}
+            value={{
+                user,
+                isAuthenticated,
+                login,
+                logout,
+                signup,
+                updateProfile,
+            }}
         >
             {children}
         </AuthContext.Provider>

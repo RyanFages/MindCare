@@ -102,10 +102,10 @@ const SettingsScreen = ({ onNavigate }: SettingsScreenProps) => {
                         </div>
                         <div>
                             <h3 className="font-bold text-foreground font-display">
-                                {user?.name || "Sarah Martin"}
+                                {user?.name}
                             </h3>
                             <TextBody className="text-[14px] text-muted-foreground">
-                                {user?.email || "sarah.m@email.com"}
+                                {user?.email}
                             </TextBody>
                         </div>
                     </div>

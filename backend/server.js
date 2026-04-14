@@ -176,6 +176,64 @@ app.post("/api/auth/login", async (req, res) => {
     }
 });
 
+app.put("/api/auth/profile", async (req, res) => {
+    try {
+        const { currentEmail, email, name } = req.body;
+
+        if (!currentEmail || !email || !name) {
+            return res.status(400).json({
+                message: "Email actuel, nouvel email et nom requis.",
+            });
+        }
+
+        const normalizedCurrentEmail = String(currentEmail)
+            .trim()
+            .toLowerCase();
+        const normalizedEmail = String(email).trim().toLowerCase();
+        const userName = String(name).trim();
+
+        if (!normalizedCurrentEmail || !normalizedEmail || !userName) {
+            return res.status(400).json({ message: "Informations invalides." });
+        }
+
+        const user = await User.findOne({ email: normalizedCurrentEmail });
+        if (!user) {
+            return res
+                .status(401)
+                .json({ message: "Utilisateur introuvable." });
+        }
+
+        if (normalizedEmail !== user.email) {
+            const existingUser = await User.findOne({ email: normalizedEmail });
+            if (existingUser) {
+                return res
+                    .status(409)
+                    .json({ message: "Un compte existe deja avec cet email." });
+            }
+        }
+
+        user.username = userName;
+        user.email = normalizedEmail;
+        await user.save();
+
+        return res.json({
+            user: {
+                id: String(user._id),
+                email: user.email,
+                name: user.username,
+            },
+        });
+    } catch (error) {
+        if (error && error.code === 11000) {
+            return res
+                .status(409)
+                .json({ message: "Un compte existe deja avec cet email." });
+        }
+        console.error("Erreur update profile:", error);
+        return res.status(500).json({ message: "Erreur serveur." });
+    }
+});
+
 app.get("/api/journals", async (req, res) => {
     try {
         const { email } = req.query;
