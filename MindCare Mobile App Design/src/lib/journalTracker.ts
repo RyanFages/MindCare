@@ -75,3 +75,31 @@ export async function deleteEntry(id: string): Promise<boolean> {
         return false;
     }
 }
+
+export async function updateEntry(
+    id: string,
+    text: string,
+): Promise<JournalEntry | null> {
+    const email = getCurrentUserEmail();
+    if (!email) return null;
+
+    try {
+        const response = await fetch(
+            `${API_BASE_URL}/journals/${encodeURIComponent(id)}`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email, text }),
+            },
+        );
+
+        if (!response.ok) return null;
+
+        const data = await response.json();
+        return data.entry || null;
+    } catch {
+        return null;
+    }
+}

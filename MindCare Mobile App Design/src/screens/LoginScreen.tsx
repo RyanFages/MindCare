@@ -207,14 +207,6 @@ const LoginScreen = ({ onLoginSuccess }: LoginScreenProps) => {
                             </button>
                         </p>
                     </div>
-
-                    {/* Hint pour les tests */}
-                    {!isSignup && (
-                        <div className="text-xs text-muted-foreground text-center p-3 rounded-lg bg-background/50 border border-border/50 mt-6">
-                            Create an account first, then sign in with your
-                            email and password.
-                        </div>
-                    )}
                 </motion.form>
             </div>
         </Screen>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Plus, BookText, Trash2, ChevronRight } from "lucide-react";
+import { Plus, BookText, Trash2, ChevronRight, Pencil } from "lucide-react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Screen from "@/components/mindcare/Screen";
 import BottomBar from "@/components/mindcare/BottomBar";
@@ -11,6 +11,7 @@ import {
     getAllEntries,
     addEntry,
     deleteEntry,
+    updateEntry,
     type JournalEntry,
 } from "@/lib/journalTracker";
 
@@ -25,6 +26,7 @@ const JournalScreen = ({ onNavigate, onBack }: JournalScreenProps) => {
     const [isWriting, setIsWriting] = useState(false);
     const [text, setText] = useState("");
     const [expandedId, setExpandedId] = useState<string | null>(null);
+    const [editingId, setEditingId] = useState<string | null>(null);
 
     useEffect(() => {
         const loadEntries = async () => {
@@ -37,10 +39,23 @@ const JournalScreen = ({ onNavigate, onBack }: JournalScreenProps) => {
 
     const handleSave = async () => {
         if (!text.trim()) return;
-        await addEntry(text.trim());
+
+        if (editingId) {
+            await updateEntry(editingId, text.trim());
+        } else {
+            await addEntry(text.trim());
+        }
+
         setText("");
         setIsWriting(false);
+        setEditingId(null);
         setEntries(await getAllEntries());
+    };
+
+    const handleStartEdit = (entry: JournalEntry) => {
+        setEditingId(entry.id);
+        setText(entry.text);
+        setIsWriting(true);
     };
 
     const handleDelete = async (id: string) => {
@@ -78,7 +93,9 @@ const JournalScreen = ({ onNavigate, onBack }: JournalScreenProps) => {
                 {isWriting ? (
                     <McCard className="p-4 space-y-4">
                         <H2 className="text-[18px]">
-                            {t("journal.new-entry.title")}
+                            {editingId
+                                ? t("button.edit")
+                                : t("journal.new-entry.title")}
                         </H2>
                         <textarea
                             value={text}
@@ -94,6 +111,7 @@ const JournalScreen = ({ onNavigate, onBack }: JournalScreenProps) => {
                                 onClick={() => {
                                     setIsWriting(false);
                                     setText("");
+                                    setEditingId(null);
                                 }}
                             >
                                 {t("journal.button.cancel")}
@@ -111,7 +129,11 @@ const JournalScreen = ({ onNavigate, onBack }: JournalScreenProps) => {
                 ) : (
                     <McCard
                         className="p-5 flex items-center gap-4 cursor-pointer active:scale-[0.98] transition-transform border-dashed border-2 border-primary/30 bg-primary/5"
-                        onClick={() => setIsWriting(true)}
+                        onClick={() => {
+                            setEditingId(null);
+                            setText("");
+                            setIsWriting(true);
+                        }}
                     >
                         <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
                             <Plus size={24} className="text-primary" />
@@ -166,6 +188,15 @@ const JournalScreen = ({ onNavigate, onBack }: JournalScreenProps) => {
                                             <p className="font-body text-foreground text-[14px] leading-relaxed whitespace-pre-wrap">
                                                 {entry.text}
                                             </p>
+                                            <button
+                                                onClick={() => {
+                                                    handleStartEdit(entry);
+                                                }}
+                                                className="flex items-center gap-2 text-primary text-[13px] font-medium"
+                                            >
+                                                <Pencil size={14} />
+                                                {t("button.edit")}
+                                            </button>
                                             <button
                                                 onClick={() => {
                                                     void handleDelete(entry.id);

@@ -31,8 +31,6 @@ async function sendEvalToN8n(payload) {
         };
     }
 
-    const startedAt = Date.now();
-
     try {
         console.log("Envoi eval a n8n webhook:", payload);
         const response = await fetch(N8N_WEBHOOK_URL, {
@@ -50,16 +48,17 @@ async function sendEvalToN8n(payload) {
             try {
                 parsedBody = JSON.parse(rawBody);
             } catch {
-                // Garde le body brut si la reponse n'est pas du JSON.
+                console.error(
+                    "Erreur lors de l'analyse du corps de la reponse n8n:",
+                );
+                console.error(rawBody);
             }
         }
 
-        const durationMs = Date.now() - startedAt;
         const payloadToReturn = {
             ok: response.ok,
             status: response.status,
             statusText: response.statusText,
-            durationMs,
             body: parsedBody,
         };
 
@@ -71,12 +70,10 @@ async function sendEvalToN8n(payload) {
 
         return payloadToReturn;
     } catch (error) {
-        const durationMs = Date.now() - startedAt;
         const payloadToReturn = {
             ok: false,
             status: 0,
             statusText: "FETCH_ERROR",
-            durationMs,
             error,
         };
         console.error("Erreur webhook n8n:", payloadToReturn);
@@ -240,6 +237,58 @@ app.post("/api/journals", async (req, res) => {
         });
     } catch (error) {
         console.error("Erreur create journal:", error);
+        return res.status(500).json({ message: "Erreur serveur." });
+    }
+});
+
+app.put("/api/journals/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { email, text } = req.body;
+
+        if (!email || !text) {
+            return res.status(400).json({ message: "Email et texte requis." });
+        }
+
+        const user = await findUserByEmail(email);
+        if (!user) {
+            return res
+                .status(401)
+                .json({ message: "Utilisateur introuvable." });
+        }
+
+        const trimmedText = String(text).trim();
+        if (!trimmedText) {
+            return res.status(400).json({ message: "Texte invalide." });
+        }
+
+        const updated = await Journal.findOneAndUpdate(
+            {
+                _id: id,
+                userId: user._id,
+            },
+            {
+                title: trimmedText.slice(0, 60),
+                content: trimmedText,
+            },
+            {
+                new: true,
+            },
+        );
+
+        if (!updated) {
+            return res.status(404).json({ message: "Entree introuvable." });
+        }
+
+        return res.json({
+            entry: {
+                id: String(updated._id),
+                text: updated.content,
+                date: updated.date,
+            },
+        });
+    } catch (error) {
+        console.error("Erreur update journal:", error);
         return res.status(500).json({ message: "Erreur serveur." });
     }
 });
