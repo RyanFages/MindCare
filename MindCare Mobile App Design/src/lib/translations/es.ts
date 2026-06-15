@@ -363,11 +363,11 @@ export const es = {
     // Profile Edit Screen
     "profile.title": "Editar Perfil",
     "profile.label.firstname": "Nombre",
-    "profile.placeholder.firstname": "Sarah",
+    "profile.placeholder.firstname": "Nombre",
     "profile.label.lastname": "Apellido",
-    "profile.placeholder.lastname": "Martin",
+    "profile.placeholder.lastname": "Apellido",
     "profile.label.email": "Correo Electrónico",
-    "profile.placeholder.email": "sarah.m@email.com",
+    "profile.placeholder.email": "Correo Electrónico",
     "profile.description": "Tu información se mantiene privada.",
     "profile.button.save": "Guardar",
 

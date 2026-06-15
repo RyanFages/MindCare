@@ -362,11 +362,11 @@ export const it = {
     // Profile Edit Screen
     "profile.title": "Modifica Profilo",
     "profile.label.firstname": "Nome",
-    "profile.placeholder.firstname": "Sarah",
+    "profile.placeholder.firstname": "Nome",
     "profile.label.lastname": "Cognome",
-    "profile.placeholder.lastname": "Martin",
+    "profile.placeholder.lastname": "Cognome",
     "profile.label.email": "Email",
-    "profile.placeholder.email": "sarah.m@email.com",
+    "profile.placeholder.email": "Email",
     "profile.description": "Le tue informazioni rimangono private.",
     "profile.button.save": "Salva",
 

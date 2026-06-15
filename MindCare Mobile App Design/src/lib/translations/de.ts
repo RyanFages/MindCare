@@ -367,11 +367,11 @@ export const de = {
     // Profile Edit Screen
     "profile.title": "Profil bearbeiten",
     "profile.label.firstname": "Vorname",
-    "profile.placeholder.firstname": "Sarah",
+    "profile.placeholder.firstname": "Vorname",
     "profile.label.lastname": "Nachname",
-    "profile.placeholder.lastname": "Martin",
+    "profile.placeholder.lastname": "Nachname",
     "profile.label.email": "E-Mail",
-    "profile.placeholder.email": "sarah.m@email.com",
+    "profile.placeholder.email": "E-Mail",
     "profile.description": "Ihre Informationen bleiben privat.",
     "profile.button.save": "Speichern",
 

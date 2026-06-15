@@ -357,13 +357,13 @@ export const en = {
     // Profile Edit Screen
     "profile.title": "Edit Profile",
     "profile.label.firstname": "First Name",
-    "profile.placeholder.firstname": "Sarah",
+    "profile.placeholder.firstname": "First Name",
     "profile.label.lastname": "Last Name",
-    "profile.placeholder.lastname": "Martin",
+    "profile.placeholder.lastname": "Last Name",
     "profile.label.email": "Email",
-    "profile.placeholder.email": "sarah.m@email.com",
-    "profile.description": "Your information stays private.",
+    "profile.placeholder.email": "Email",
     "profile.button.save": "Save",
+    "profile.description": "Your information remains private.",
 
     // Subscription Screen
     "subscription.title": "Subscription",

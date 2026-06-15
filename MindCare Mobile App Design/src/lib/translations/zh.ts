@@ -339,11 +339,11 @@ export const zh = {
     // Profile Edit Screen
     "profile.title": "编辑资料",
     "profile.label.firstname": "名字",
-    "profile.placeholder.firstname": "Sarah",
+    "profile.placeholder.firstname": "名字",
     "profile.label.lastname": "姓氏",
-    "profile.placeholder.lastname": "Martin",
+    "profile.placeholder.lastname": "姓氏",
     "profile.label.email": "邮箱",
-    "profile.placeholder.email": "sarah.m@email.com",
+    "profile.placeholder.email": "邮箱",
     "profile.description": "您的信息保持隐私。",
     "profile.button.save": "保存",
 

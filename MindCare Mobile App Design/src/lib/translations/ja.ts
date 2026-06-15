@@ -355,11 +355,11 @@ export const ja = {
     // Profile Edit Screen
     "profile.title": "プロフィールを編集",
     "profile.label.firstname": "ファーストネーム",
-    "profile.placeholder.firstname": "Sarah",
+    "profile.placeholder.firstname": "ファーストネーム",
     "profile.label.lastname": "姓",
-    "profile.placeholder.lastname": "Martin",
+    "profile.placeholder.lastname": "姓",
     "profile.label.email": "メール",
-    "profile.placeholder.email": "sarah.m@email.com",
+    "profile.placeholder.email": "メール",
     "profile.description": "あなたの情報は個人情報のままです。",
     "profile.button.save": "保存",
 
