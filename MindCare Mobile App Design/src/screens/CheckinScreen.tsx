@@ -238,9 +238,6 @@ const CheckinScreen = ({ onComplete, onBack }: CheckinScreenProps) => {
                                 <H1 className="mb-4 text-[28px]">
                                     {t("checkin.step3.title")}
                                 </H1>
-                                <TextBody className="text-muted-foreground mb-8">
-                                    {t("checkin.step3.subtitle")}
-                                </TextBody>
                                 <div className="flex flex-wrap gap-3">
                                     {moodOptions.map((mood) => (
                                         <button

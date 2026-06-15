@@ -34,7 +34,7 @@ export const it = {
     "home.label.breathing": "Respirazione",
     "home.welcome": "Benvenuto",
     "home.greetings": "Come ti senti oggi?",
-    "home.your-moment": "Il Tuo Momento",
+    "home.your-moment": "Il Tuo momento",
     "home.your-moment.subtitle": "2 minuti per te, proprio ora.",
     "home.history": "Cronologia del Benessere",
     "home.history.subtitle": "Traccia i tuoi progressi",
@@ -182,8 +182,18 @@ export const it = {
     "content.button.save": "Salva per dopo",
     "content.button.remove": "Rimuovi dai preferiti",
     "content.button.done": "Ho finito",
+    "content.type.article": "Articolo",
+    "content.type.testimonial": "Testimonianza",
+    "content.type.podcast": "Podcast",
+    "content.type.exercise": "Esercizio",
+    "content.age.suffix": "anni",
     "content.testimonial.consent":
         "Questa testimonianza è stata condivisa con il consenso dell'autore e moderato prima della pubblicazione.",
+    "button.return-home": "Torna alla home",
+    "result.disclaimer":
+        "⚠️ Questo risultato non costituisce una diagnosi medica. Se sei in difficoltà, contatta un professionista sanitario.",
+    "login.error.email-exists":
+        "Esiste già un account con questo indirizzo email.",
 
     // Checkin Screen
     "checkin.title": "Check-in",
@@ -200,7 +210,6 @@ export const it = {
     "checkin.concern.future": "Futuro",
     "checkin.concern.none": "Nulla di speciale",
     "checkin.step3.title": "Come ti senti?",
-    "checkin.step3.subtitle": "Seleziona uno o più.",
     "checkin.mood.calm": "Calmo",
     "checkin.mood.motivated": "Motivato",
     "checkin.mood.grateful": "Grato",

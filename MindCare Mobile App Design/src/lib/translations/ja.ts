@@ -183,8 +183,18 @@ export const ja = {
     "content.button.save": "後で保存",
     "content.button.remove": "お気に入りから削除",
     "content.button.done": "終了しました",
+    "content.type.article": "記事",
+    "content.type.testimonial": "お客様の声",
+    "content.type.podcast": "ポッドキャスト",
+    "content.type.exercise": "エクササイズ",
+    "content.age.suffix": "歳",
     "content.testimonial.consent":
         "このお客様の声は著者の同意と共に共有され、公開前にモデレートされました。",
+    "button.return-home": "ホームに戻る",
+    "result.disclaimer":
+        "⚠️ この結果は医療診断ではありません。困っている場合は医療専門家に連絡してください。",
+    "login.error.email-exists":
+        "このメールアドレスですでにアカウントが存在します。",
 
     // Checkin Screen
     "checkin.title": "チェックイン",
@@ -201,7 +211,6 @@ export const ja = {
     "checkin.concern.future": "将来",
     "checkin.concern.none": "特に何もない",
     "checkin.step3.title": "あなたはどのように感じますか？",
-    "checkin.step3.subtitle": "1つ以上を選択します。",
     "checkin.mood.calm": "落ち着いた",
     "checkin.mood.motivated": "モチベーションがある",
     "checkin.mood.grateful": "感謝しています",

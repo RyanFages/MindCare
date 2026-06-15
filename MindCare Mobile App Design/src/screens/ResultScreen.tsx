@@ -315,13 +315,11 @@ const ResultScreen = ({
                         fullWidth
                         variant="ghost"
                     >
-                        Retour à l'accueil
+                        {t("button.return-home")}
                     </McButton>
                 </motion.div>
-
                 <p className="text-[12px] text-muted-foreground/70 mt-6 text-center max-w-xs mx-auto italic">
-                    ⚠️ Ce résultat ne constitue pas un diagnostic médical. En
-                    cas de détresse, contactez un professionnel de santé.
+                    {t("result.disclaimer")}
                 </p>
             </div>
         </Screen>

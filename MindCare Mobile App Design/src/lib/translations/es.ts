@@ -60,7 +60,7 @@ export const es = {
     "home.label.breathing": "Respiración",
     "home.welcome": "Bienvenido",
     "home.greetings": "¿Cómo te sientes hoy?",
-    "home.your-moment": "Tu Momento",
+    "home.your-moment": "Tu momento",
     "home.your-moment.subtitle": "2 minutos para ti, ahora mismo.",
     "home.history": "Historial de Bienestar",
     "home.history.subtitle": "Sigue tu progreso",
@@ -182,8 +182,18 @@ export const es = {
     "content.button.save": "Guardar para después",
     "content.button.remove": "Quitar de favoritos",
     "content.button.done": "He terminado",
+    "content.type.article": "Artículo",
+    "content.type.testimonial": "Testimonio",
+    "content.type.podcast": "Podcast",
+    "content.type.exercise": "Ejercicio",
+    "content.age.suffix": "años",
     "content.testimonial.consent":
-        "Este testimonio fue compartido con consentimiento del autor y moderado antes de su publicación.",
+        "Este testimonio se compartió con consentimiento del autor y moderado antes de su publicación.",
+    "button.return-home": "Volver al inicio",
+    "result.disclaimer":
+        "⚠️ Este resultado no constituye un diagnóstico médico. Si estás en crisis, contacta a un profesional de la salud.",
+    "login.error.email-exists":
+        "Ya existe una cuenta con esta dirección de correo electrónico.",
 
     // Checkin Screen
     "checkin.title": "Verificar",
@@ -200,7 +210,6 @@ export const es = {
     "checkin.concern.future": "Futuro",
     "checkin.concern.none": "Nada especial",
     "checkin.step3.title": "¿Cómo te sientes?",
-    "checkin.step3.subtitle": "Selecciona uno o más.",
     "checkin.mood.calm": "Tranquilo",
     "checkin.mood.motivated": "Motivado",
     "checkin.mood.grateful": "Agradecido",

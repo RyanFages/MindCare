@@ -196,7 +196,7 @@ app.put("/api/auth/profile", async (req, res) => {
             return res.status(400).json({ message: "Informations invalides." });
         }
 
-        const user = await User.findOne({ email: normalizedCurrentEmail });
+        const user = await findUserByEmail(normalizedCurrentEmail);
         if (!user) {
             return res
                 .status(401)
@@ -204,7 +204,10 @@ app.put("/api/auth/profile", async (req, res) => {
         }
 
         if (normalizedEmail !== user.email) {
-            const existingUser = await User.findOne({ email: normalizedEmail });
+            const existingUser = await User.findOne({
+                email: normalizedEmail,
+                _id: { $ne: user._id },
+            });
             if (existingUser) {
                 return res
                     .status(409)

@@ -171,9 +171,19 @@ export const zh = {
 
     // Content Reader Screen
     "content.button.save": "保存以供稍后使用",
-    "content.button.remove": "从收藏夹删除",
-    "content.button.done": "我完成了",
+    "content.button.remove": "从收藏中移除",
+    "content.button.done": "完成",
+    "content.type.article": "文章",
+    "content.type.testimonial": "证词",
+    "content.type.podcast": "播客",
+    "content.type.exercise": "练习",
+    "content.age.suffix": "岁",
     "content.testimonial.consent": "本证明已获得作者同意并在发布前进行了审核。",
+    "button.return-home": "返回首页",
+    "result.disclaimer":
+        "⚠️ 此结果不构成医疗诊断。如果您遇到困境，请联系医疗专业人员。",
+    "login.error.email-exists":
+        "该电子邮件地址已存在一个帐户。",
 
     // Checkin Screen
     "checkin.title": "签到",
@@ -189,7 +199,6 @@ export const zh = {
     "checkin.concern.future": "未来",
     "checkin.concern.none": "没什么特别的",
     "checkin.step3.title": "你感觉如何？",
-    "checkin.step3.subtitle": "选择一个或多个。",
     "checkin.mood.calm": "平静",
     "checkin.mood.motivated": "有动力的",
     "checkin.mood.grateful": "感谢",

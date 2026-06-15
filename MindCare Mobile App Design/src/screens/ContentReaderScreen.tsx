@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BookOpen, Clock, Shield, Quote, Bookmark } from "lucide-react";
+import { Clock, Shield, Bookmark } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Screen from "@/components/mindcare/Screen";
 import TopBar from "@/components/mindcare/TopBar";
@@ -19,6 +19,23 @@ interface ContentReaderScreenProps {
 const ContentReaderScreen = ({ content, onBack }: ContentReaderScreenProps) => {
     const { t } = useLanguage();
     const [fav, setFav] = useState(false);
+
+    const isTestimonial = content?.type === "Témoignage";
+    const contentTypeLabel = (() => {
+        switch (content?.type) {
+            case "Témoignage":
+                return t("content.type.testimonial");
+            case "Article":
+                return t("content.type.article");
+            case "Podcast":
+                return t("content.type.podcast");
+            case "Exercice":
+                return t("content.type.exercise");
+            default:
+                return content?.type || "";
+        }
+    })();
+    const ageSuffix = t("content.age.suffix");
 
     useEffect(() => {
         if (content) {
@@ -64,16 +81,15 @@ const ContentReaderScreen = ({ content, onBack }: ContentReaderScreenProps) => {
                 <div className="mb-6">
                     <div className="flex items-center gap-3 mb-3">
                         <span className="px-3 py-1 rounded-full bg-background text-muted-foreground text-[12px] font-bold uppercase tracking-wider">
-                            {content.type}
-                        </span>
-                        <span className="text-[13px] text-mc-text-muted flex items-center gap-1">
-                            <Clock size={14} /> {content.duration}
-                        </span>
-                    </div>
-                    <H1 className="text-[28px]">{content.title}</H1>
+                                {contentTypeLabel}
+                            </span>
+                            <span className="text-[13px] text-mc-text-muted flex items-center gap-1">
+                                <Clock size={14} /> {content.duration}
+                            </span>
+                        </div>
+                        <H1 className="text-[28px]">{content.title}</H1>
 
-                    {content.type === "Témoignage" &&
-                        (content as any).author && (
+                        {isTestimonial && (content as any).author && (
                             <div className="mt-4 flex items-center gap-3">
                                 <div className="w-10 h-10 rounded-full bg-mc-peach/20 flex items-center justify-center font-display font-bold text-foreground text-[15px]">
                                     {(content as any).author.charAt(0)}
@@ -81,7 +97,7 @@ const ContentReaderScreen = ({ content, onBack }: ContentReaderScreenProps) => {
                                 <div>
                                     <p className="font-display font-semibold text-foreground text-[15px]">
                                         {(content as any).author},{" "}
-                                        {(content as any).age} ans
+                                        {(content as any).age} {ageSuffix}
                                     </p>
                                     {(content as any).theme && (
                                         <span className="text-[11px] font-medium text-accent bg-accent/10 px-2 py-0.5 rounded-full">
@@ -91,13 +107,12 @@ const ContentReaderScreen = ({ content, onBack }: ContentReaderScreenProps) => {
                                 </div>
                             </div>
                         )}
-                </div>
-
+                    </div>
                 <div className="prose prose-lg text-foreground font-body leading-loose whitespace-pre-wrap">
                     {content.content}
                 </div>
 
-                {content.type === "Témoignage" && (
+                {isTestimonial && (
                     <div className="mt-6 flex items-center gap-3 p-3 bg-muted/50 rounded-[12px] border border-border">
                         <Shield
                             size={14}

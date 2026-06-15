@@ -46,7 +46,7 @@ const LoginScreen = ({ onLoginSuccess }: LoginScreenProps) => {
                 err instanceof Error &&
                 err.message === "EMAIL_ALREADY_EXISTS"
             ) {
-                setError("Un compte existe deja avec cette adresse email.");
+                setError(t("login.error.email-exists"));
             } else {
                 setError(t("error.occurred"));
             }
