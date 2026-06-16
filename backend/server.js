@@ -14,7 +14,8 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 const N8N_WEBHOOK_URL = process.env.N8N_WEBHOOK_URL || "";
-const EMAIL_HASH_SECRET = process.env.EMAIL_HASH_SECRET || "mindcare-email-hash-secret";
+const EMAIL_HASH_SECRET =
+    process.env.EMAIL_HASH_SECRET || "mindcare-email-hash-secret";
 
 function normalizeEmail(email) {
     return String(email || "")
@@ -239,7 +240,7 @@ app.put("/api/auth/profile", async (req, res) => {
                 username: userName,
                 emailHash: newEmailHash,
             },
-            { new: true }
+            { new: true },
         );
 
         return res.json({

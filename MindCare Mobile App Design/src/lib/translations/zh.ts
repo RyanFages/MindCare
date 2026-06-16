@@ -182,8 +182,7 @@ export const zh = {
     "button.return-home": "返回首页",
     "result.disclaimer":
         "⚠️ 此结果不构成医疗诊断。如果您遇到困境，请联系医疗专业人员。",
-    "login.error.email-exists":
-        "该电子邮件地址已存在一个帐户。",
+    "login.error.email-exists": "该电子邮件地址已存在一个帐户。",
 
     // Checkin Screen
     "checkin.title": "签到",
