@@ -10,8 +10,8 @@ export const ja = {
     // Login & Signup
     "login.title": "おかえりなさい",
     "login.subtitle": "アカウントにログインしてください",
-    "login.name": "名前",
-    "login.name.placeholder": "あなたの名前",
+    "login.name": "ペンネーム",
+    "login.name.placeholder": "あなたのペンネーム",
     "login.email": "メール",
     "login.email.placeholder": "メールアドレス",
     "login.password": "パスワード",
@@ -354,10 +354,10 @@ export const ja = {
 
     // Profile Edit Screen
     "profile.title": "プロフィールを編集",
-    "profile.label.firstname": "ファーストネーム",
-    "profile.placeholder.firstname": "ファーストネーム",
-    "profile.label.lastname": "姓",
-    "profile.placeholder.lastname": "姓",
+    "profile.label.firstname": "ペンネーム",
+    "profile.placeholder.firstname": "あなたのペンネーム",
+    "profile.label.lastname": "ペンネーム",
+    "profile.placeholder.lastname": "あなたのペンネーム",
     "profile.label.email": "メール",
     "profile.placeholder.email": "メール",
     "profile.description": "あなたの情報は個人情報のままです。",

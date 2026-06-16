@@ -10,8 +10,8 @@ export const pt = {
     // Login & Signup
     "login.title": "Bem-vindo de volta",
     "login.subtitle": "Por favor, faça login em sua conta",
-    "login.name": "Nome",
-    "login.name.placeholder": "Seu nome",
+    "login.name": "Pseudônimo",
+    "login.name.placeholder": "Seu pseudônimo",
     "login.email": "Email",
     "login.email.placeholder": "endereço de email",
     "login.password": "Senha",
@@ -363,10 +363,10 @@ export const pt = {
 
     // Profile Edit Screen
     "profile.title": "Editar Perfil",
-    "profile.label.firstname": "Primeiro Nome",
-    "profile.placeholder.firstname": "Primeiro Nome",
-    "profile.label.lastname": "Sobrenome",
-    "profile.placeholder.lastname": "Sobrenome",
+    "profile.label.firstname": "Pseudônimo",
+    "profile.placeholder.firstname": "Seu pseudônimo",
+    "profile.label.lastname": "Pseudônimo",
+    "profile.placeholder.lastname": "Seu pseudônimo",
     "profile.label.email": "Email",
     "profile.placeholder.email": "Email",
     "profile.description": "Suas informações permanecem privadas.",

@@ -10,8 +10,8 @@ export const zh = {
     // Login & Signup
     "login.title": "欢迎回来",
     "login.subtitle": "请登录到您的帐户",
-    "login.name": "名字",
-    "login.name.placeholder": "您的名字",
+    "login.name": "化名",
+    "login.name.placeholder": "您的化名",
     "login.email": "邮箱",
     "login.email.placeholder": "邮箱地址",
     "login.password": "密码",
@@ -338,10 +338,10 @@ export const zh = {
 
     // Profile Edit Screen
     "profile.title": "编辑资料",
-    "profile.label.firstname": "名字",
-    "profile.placeholder.firstname": "名字",
-    "profile.label.lastname": "姓氏",
-    "profile.placeholder.lastname": "姓氏",
+    "profile.label.firstname": "化名",
+    "profile.placeholder.firstname": "您的化名",
+    "profile.label.lastname": "化名",
+    "profile.placeholder.lastname": "您的化名",
     "profile.label.email": "邮箱",
     "profile.placeholder.email": "邮箱",
     "profile.description": "您的信息保持隐私。",

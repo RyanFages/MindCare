@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const cors = require("cors");
+const crypto = require("crypto");
 require("dotenv").config();
 const User = require("./collections/User");
 const Journal = require("./collections/journal");
@@ -13,6 +14,20 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 const N8N_WEBHOOK_URL = process.env.N8N_WEBHOOK_URL || "";
+const EMAIL_HASH_SECRET = process.env.EMAIL_HASH_SECRET || "mindcare-email-hash-secret";
+
+function normalizeEmail(email) {
+    return String(email || "")
+        .trim()
+        .toLowerCase();
+}
+
+function hashEmail(email) {
+    return crypto
+        .createHmac("sha256", EMAIL_HASH_SECRET)
+        .update(normalizeEmail(email))
+        .digest("hex");
+}
 
 async function sendEvalToN8n(payload) {
     if (!N8N_WEBHOOK_URL) {
@@ -86,11 +101,12 @@ app.get("/api/health", (_req, res) => {
 });
 
 const findUserByEmail = async (email) => {
-    const normalizedEmail = String(email || "")
-        .trim()
-        .toLowerCase();
+    const normalizedEmail = normalizeEmail(email);
     if (!normalizedEmail) return null;
-    return User.findOne({ email: normalizedEmail });
+
+    const emailHash = hashEmail(normalizedEmail);
+    const user = await User.findOne({ emailHash });
+    return user || null;
 };
 
 app.post("/api/auth/signup", async (req, res) => {
@@ -106,7 +122,8 @@ app.post("/api/auth/signup", async (req, res) => {
         const normalizedEmail = String(email).trim().toLowerCase();
         const userName = String(name).trim();
 
-        const existingUser = await User.findOne({ email: normalizedEmail });
+        const emailHash = hashEmail(normalizedEmail);
+        const existingUser = await User.findOne({ emailHash });
         if (existingUser) {
             return res
                 .status(409)
@@ -116,15 +133,15 @@ app.post("/api/auth/signup", async (req, res) => {
         const passwordHash = await bcrypt.hash(String(password), 10);
         const newUser = await User.create({
             username: userName,
-            email: normalizedEmail,
+            emailHash,
             password: passwordHash,
         });
 
         return res.status(201).json({
             user: {
                 id: String(newUser._id),
-                email: newUser.email,
-                name: newUser.username,
+                email: normalizedEmail,
+                name: userName,
             },
         });
     } catch (error) {
@@ -149,7 +166,7 @@ app.post("/api/auth/login", async (req, res) => {
         }
 
         const normalizedEmail = String(email).trim().toLowerCase();
-        const user = await User.findOne({ email: normalizedEmail });
+        const user = await findUserByEmail(normalizedEmail);
 
         if (!user) {
             return res.status(401).json({ message: "Identifiants invalides." });
@@ -166,7 +183,7 @@ app.post("/api/auth/login", async (req, res) => {
         return res.json({
             user: {
                 id: String(user._id),
-                email: user.email,
+                email: normalizedEmail,
                 name: user.username,
             },
         });
@@ -203,9 +220,10 @@ app.put("/api/auth/profile", async (req, res) => {
                 .json({ message: "Utilisateur introuvable." });
         }
 
-        if (normalizedEmail !== user.email) {
+        const newEmailHash = hashEmail(normalizedEmail);
+        if (newEmailHash !== user.emailHash) {
             const existingUser = await User.findOne({
-                email: normalizedEmail,
+                emailHash: newEmailHash,
                 _id: { $ne: user._id },
             });
             if (existingUser) {
@@ -215,15 +233,20 @@ app.put("/api/auth/profile", async (req, res) => {
             }
         }
 
-        user.username = userName;
-        user.email = normalizedEmail;
-        await user.save();
+        const updatedUser = await User.findByIdAndUpdate(
+            user._id,
+            {
+                username: userName,
+                emailHash: newEmailHash,
+            },
+            { new: true }
+        );
 
         return res.json({
             user: {
-                id: String(user._id),
-                email: user.email,
-                name: user.username,
+                id: String(updatedUser._id),
+                email: normalizedEmail,
+                name: userName,
             },
         });
     } catch (error) {
@@ -441,7 +464,7 @@ app.post("/api/evals", async (req, res) => {
             event: "eval.created",
             user: {
                 id: String(user._id),
-                email: user.email,
+                email: normalizeEmail(email),
             },
             entry: responseEntry,
             createdAt: new Date().toISOString(),
