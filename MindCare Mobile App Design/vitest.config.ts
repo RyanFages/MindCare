@@ -9,6 +9,10 @@ export default defineConfig({
     globals: true,
     setupFiles: ["./src/test/setup.ts"],
     include: ["src/**/*.{test,spec}.{ts,tsx}"],
+    reporters: ["default", "json"],
+    outputFile: {
+      json: "./test-results.json",
+    },
   },
   resolve: {
     alias: { "@": path.resolve(__dirname, "./src") },

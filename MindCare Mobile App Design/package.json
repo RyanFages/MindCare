@@ -9,8 +9,9 @@
         "build:dev": "vite build --mode development",
         "lint": "eslint .",
         "preview": "vite preview",
-        "test": "vitest run",
-        "test:watch": "vitest"
+        "test": "vitest run && node scripts/format-test-report.js",
+        "test:watch": "vitest",
+        "test:report": "node scripts/format-test-report.js"
     },
     "dependencies": {
         "@hookform/resolvers": "^3.10.0",
