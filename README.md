@@ -67,20 +67,15 @@ Le frontend n'utilise pas un `.env` central visible ici, mais peut être configu
 
 ## Installation et démarrage
 
-### Backend
-
-```bash
-cd backend
-npm install
-npm run dev
+```powershell
+.\start-local.ps1
 ```
 
-### Frontend
+### macOS/Linux
 
 ```bash
-cd "MindCare Mobile App Design"
-npm install
-npm run dev
+chmod +x start-local.sh
+./start-local.sh
 ```
 
 ## Tests frontend

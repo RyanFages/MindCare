@@ -494,7 +494,18 @@ app.post("/api/evals", async (req, res) => {
 // Connexion à MongoDB
 mongoose
     .connect(process.env.MONGO_URI)
-    .then(() => console.log("Connecté à MongoDB !"))
+    .then(async () => {
+        console.log("Connecté à MongoDB !");
+        // Supprimer l'ancien index unique sur 'email' s'il existe encore
+        // (migration : l'ancien schéma utilisait email, le nouveau utilise emailHash)
+        try {
+            await User.collection.dropIndex("email_1");
+            console.log("Ancien index 'email_1' supprimé avec succès.");
+        } catch (e) {
+            // L'index n'existe pas ou déjà supprimé, on ignore
+            if (e.code !== 27) console.error("Erreur suppression index email_1:", e);
+        }
+    })
     .catch((err) => console.error("Erreur de connexion", err));
 
 app.listen(PORT, () => console.log(`Serveur lance sur le port ${PORT}`));
