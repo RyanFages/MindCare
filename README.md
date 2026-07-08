@@ -56,7 +56,6 @@ Créer un fichier `.env` dans `backend/` avec au moins :
 
 ```env
 MONGO_URI=<votre-mongodb-uri>
-EMAIL_HASH_SECRET=<secret-pour-hasher-les-emails>
 N8N_WEBHOOK_URL=<optionnel-webhook-n8n>
 PORT=3000
 ```
